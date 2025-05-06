@@ -1,50 +1,35 @@
 import Link from "next/link";
+import { simplifiedProduct } from "../interface";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
-import { simplifiedProduct } from "../interface";
 
-// Define the shape of the props
-interface CategoryPageProps {
-  params: {
-    category: string;
-  };
+async function getData(cateogry: string) {
+  const query = `*[_type == "product" && category->name == "${cateogry}"] {
+        _id,
+          "imageUrl": images[0].asset->url,
+          price,
+          name,
+          "slug": slug.current,
+          "categoryName": category->name
+      }`;
+
+  const data = await client.fetch(query);
+
+  return data;
 }
 
-// Define the shape of the product
-// (Optional if already declared in ../interface)
-interface SimplifiedProduct {
-  _id: string;
-  imageUrl: string;
-  price: number;
-  name: string;
-  slug: string;
-  categoryName: string;
-}
-
-// Force dynamic rendering
 export const dynamic = "force-dynamic";
 
-// Fetch data from Sanity
-async function getData(category: string): Promise<SimplifiedProduct[]> {
-  const query = `*[_type == "product" && category->name == "${category}"] {
-    _id,
-    "imageUrl": images[0].asset->url,
-    price,
-    name,
-    "slug": slug.current,
-    "categoryName": category->name
-  }`;
-
-  return await client.fetch(query);
-}
-
-// Page component
-export default async function CategoryPage({ params }: CategoryPageProps) {
-  const data = await getData(params.category);
+export default async function CategoryPage({
+  params,
+}: {
+  params: { category: string };
+}) {
+  const data: simplifiedProduct[] = await getData(params.category);
 
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6  lg:max-w-7xl lg:px-8">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Our Products for {params.category}
@@ -57,7 +42,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
                 <Image
                   src={product.imageUrl}
-                  alt={product.name}
+                  alt="Product image"
                   className="w-full h-full object-cover object-center lg:h-full lg:w-full"
                   width={300}
                   height={300}
