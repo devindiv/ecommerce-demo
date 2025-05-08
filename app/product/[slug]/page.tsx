@@ -1,7 +1,7 @@
 import AddToBag from "@/app/components/AddToBag";
 import CheckoutNow from "@/app/components/CheckoutNow";
 import ImageGallery from "@/app/components/ImageGallery";
-import { fullProduct } from "@/app/interface";
+import { fullProduct } from "@/lib/interface";
 import { Button } from "@/components/ui/button";
 import { client } from "@/lib/sanity";
 import { Star, Truck } from "lucide-react";
