@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { client } from "@/lib/sanity";
-import { simplifiedProduct } from "../interface"; // adjust if your path differs
+import { simplifiedProduct } from "../interface"; // Adjust this path if needed
 
-// Fetch products by category
+// Fetch products by category name
 async function getData(category: string) {
   const query = `*[_type == "product" && category->name == "${category}"] {
     _id,
@@ -18,10 +18,10 @@ async function getData(category: string) {
   return data;
 }
 
-// Force dynamic rendering
+// Force dynamic rendering (optional for freshness)
 export const dynamic = "force-dynamic";
 
-// Category page component
+// Correctly typed Next.js route component
 export default async function CategoryPage({
   params,
 }: {
