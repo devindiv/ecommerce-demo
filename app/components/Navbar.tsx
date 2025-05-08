@@ -8,9 +8,9 @@ import { useShoppingCart } from "use-shopping-cart";
 
 const links = [
   { name: "Home", href: "/" },
-  { name: "Men", href: "/Men" },
-  { name: "Women", href: "/Women" },
-  { name: "Teens", href: "/Teens" },
+  { name: "dry fruits", href: "/Men" },
+  { name: "supplements", href: "/Women" },
+  { name: "new", href: "/Teens" },
 ];
 
 export default function Navbar() {

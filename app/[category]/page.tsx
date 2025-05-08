@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { simplifiedProduct } from "../interface";
 import Image from "next/image";
-import { client } from "@/sanity/lib/client";
+import { client } from "@/lib/sanity";
 
 async function getData(cateogry: string) {
   const query = `*[_type == "product" && category->name == "${cateogry}"] {

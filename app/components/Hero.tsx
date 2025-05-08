@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { urlFor } from "@/lib/sanity";
+import { client, urlFor } from "@/lib/sanity";
 
 import Link from "next/link";
-import { client } from "@/sanity/lib/client";
 
 async function getData() {
   const query = "*[_type == 'heroImage'][0]";
