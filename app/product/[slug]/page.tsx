@@ -1,8 +1,8 @@
 import AddToBag from "@/app/components/AddToBag";
 import CheckoutNow from "@/app/components/CheckoutNow";
 import ImageGallery from "@/app/components/ImageGallery";
-import { fullProduct } from "@/lib/interface";
 import { Button } from "@/components/ui/button";
+import { fullProduct } from "@/lib/interface";
 import { client } from "@/lib/sanity";
 import { Star, Truck } from "lucide-react";
 
@@ -23,14 +23,13 @@ async function getData(slug: string) {
   return data;
 }
 
-export const dynamic = "force-dynamic";
-
-export default async function ProductPge({
+export default async function ProductPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const data: fullProduct = await getData(params.slug);
+  const { slug } = await params;
+  const data: fullProduct = await getData(slug);
 
   return (
     <div className="bg-white">
@@ -53,7 +52,6 @@ export default async function ProductPge({
                 <span className="text-sm">4.2</span>
                 <Star className="h-5 w-5" />
               </Button>
-
               <span className="text-sm text-gray-500 transition duration-100">
                 56 Ratings
               </span>
@@ -68,9 +66,8 @@ export default async function ProductPge({
                   ${data.price + 30}
                 </span>
               </div>
-
               <span className="text-sm text-gray-500">
-                Incl. Vat plus shipping
+                Incl. VAT plus shipping
               </span>
             </div>
 
